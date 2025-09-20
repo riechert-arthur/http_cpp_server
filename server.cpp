@@ -86,6 +86,18 @@ int main() {
       if (regex_search(msg, m , r)) {
         std::cout << m[0] << endl;
       }
+
+      const char response[] =
+        "HTTP/1.1 200 OK\r\n"
+        "Content-Type: text/plain\r\n"
+        "Content-Length: 12\r\n"
+        "Connection: close\r\n"
+        "\r\n"
+        "Hello World\n";
+
+      if (::send(ps, response, sizeof(response) - 1, 0) == -1) {
+        throw std::runtime_error("Error while ponging peer!");
+      }
     }
 
     return 0;
