@@ -9,6 +9,10 @@ struct FdCloser {
 app::HttpServer::HttpServer(std::string addr, std::uint16_t port)
   : addr(std::move(addr)), port(port) {};
 
+void app::HttpServer::add_router(router::Router router) {
+  this->router = std::move(router);
+}
+
 void app::HttpServer::run() {
   in_addr_t my_addr = parse_str_ipv4(addr);
 
@@ -80,15 +84,13 @@ void app::HttpServer::run() {
         std::cout << m[0] << std::endl;
       }
 
-      const char response[] =
-        "HTTP/1.1 200 OK\r\n"
-        "Content-Type: text/plain\r\n"
-        "Content-Length: 12\r\n"
-        "Connection: close\r\n"
-        "\r\n"
-        "Hello World\n";
+      auto h = this->router.get_handler(m[2].str());
+      std::string res;
+      if (h) {
+        res = (*h)();
+      }
 
-      if (::send(ps, response, sizeof(response) - 1, 0) == -1) {
+      if (::send(ps, res.data(), res.size(), 0) == -1) {
         throw std::runtime_error("Error while ponging peer!");
       }
     }
