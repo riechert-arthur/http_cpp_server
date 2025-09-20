@@ -4,11 +4,14 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <unistd.h>
+#include <regex>
 using namespace std;
 
-#define LOCALHOST   0x7f000001u
-#define PORT        3000
-#define BUFFER_SIZE 1024
+#define LOCALHOST    0x7f000001u
+#define PORT         3000
+#define BUFFER_SIZE  1024
+
+#define REQUEST_LINE R"((GET|POST|PATCH|DELETE)\s+(\S+)\s+HTTP/1\.[01])"
 
 struct FdCloser {
   int& fd;
@@ -76,9 +79,13 @@ int main() {
         throw std::runtime_error("Socket closed successfully!");
       }
 
-      std::cout << "Received: \n" << &buf << endl;
-      std::cout.write(buf, bytes_rcvd);
-      std::cout << endl;
+      regex r(REQUEST_LINE);
+      smatch m;
+
+      string msg(buf, bytes_rcvd);
+      if (regex_search(msg, m , r)) {
+        std::cout << m[0] << endl;
+      }
     }
 
     return 0;
