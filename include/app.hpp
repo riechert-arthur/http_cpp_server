@@ -13,6 +13,10 @@
 
 #define BUFFER_SIZE  1024
 
+#define STATUS_OK "OK"
+
+#define SUCCESS_CODE 200
+
 namespace app{
 
 class HttpServer {

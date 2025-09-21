@@ -1,13 +1,15 @@
 #ifndef ROUTER_H
 #define ROUTER_H
 
+#include "data.hpp"
+
 #include <unordered_map>
 #include <string>
 #include <functional>
 
 namespace router {
 
-using handler = std::function<std::string()>;
+using handler = std::function<std::string(data::request_t)>;
 
 class Router {
 public:

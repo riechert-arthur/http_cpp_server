@@ -1,5 +1,6 @@
 #include "app.hpp"
 #include "utils.hpp"
+#include "data.hpp"
 
 struct FdCloser {
   int& fd;
@@ -76,18 +77,12 @@ void app::HttpServer::run() {
         throw std::runtime_error("Socket closed successfully!");
       }
 
-      std::regex r(REQUEST_LINE);
-      std::smatch m;
+      data::request_t req = data::parse_request(buf, bytes_rcvd);
 
-      std::string msg(buf, bytes_rcvd);
-      if (regex_search(msg, m , r)) {
-        std::cout << m[0] << std::endl;
-      }
-
-      auto h = this->router.get_handler(m[2].str());
+      auto h = this->router.get_handler(req->route);
       std::string res;
       if (h) {
-        res = (*h)();
+        res = (*h)(std::move(req));
       }
 
       if (::send(ps, res.data(), res.size(), 0) == -1) {
