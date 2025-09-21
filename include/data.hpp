@@ -21,7 +21,7 @@ typedef struct response {
 } Response;
 
 request_t parse_request(const char*, ssize_t);
-std::string response_to_string(Response*);
+std::string response_to_string(const data::Response&);
 
 }
 

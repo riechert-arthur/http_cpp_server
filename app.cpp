@@ -84,6 +84,12 @@ void app::HttpServer::run() {
       std::string res;
       if (h) {
         res = (*h)(std::move(req));
+      } else {
+        res = data::response_to_string(
+          data::Response {
+            STATUS_NOT_FOUND, NOT_FOUND_CODE, "404 Not Found"
+          }
+        );
       }
 
       std::cout << route.method << " " << route.path << std::endl;

@@ -17,7 +17,7 @@ data::request_t data::parse_request(const char *buf, ssize_t bytes_rcvd) {
   return std::make_unique<data::Request>(m[1].str(), m[2].str());
 }
 
-std::string data::response_to_string(Response* r) {
+std::string data::response_to_string(const data::Response& r) {
   return std::format(
     R"(HTTP/1.1 {} {}
     Content-Type: text/plain
@@ -25,5 +25,5 @@ std::string data::response_to_string(Response* r) {
     Connection: close
 
     {}
-  )", r->code, r->status, r->msg);
+  )", r.code, r.status, r.msg);
 }

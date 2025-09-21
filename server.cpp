@@ -9,12 +9,13 @@ int main() {
   router::Router myrouter;
 
   myrouter.add_route("/api", POST, [](data::request_t req) {
-    data::Response res;
-    res.status = STATUS_OK;
-    res.code = SUCCESS_CODE;
-    res.msg = std::format("This is a response from {} for {}\n", req->path, req->method);
-    
-    return data::response_to_string(&res);
+    return data::response_to_string(
+      data::Response {
+        STATUS_OK,
+        SUCCESS_CODE,
+        std::format("This is a response from {} for {}\n", req->path, req->method)
+      }
+    );
   });
 
   myrouter.add_route("/api", GET, [](data::request_t req) {

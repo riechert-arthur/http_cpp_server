@@ -13,9 +13,11 @@
 
 #define BUFFER_SIZE  1024
 
-#define STATUS_OK "OK"
+#define STATUS_OK        "OK"
+#define STATUS_NOT_FOUND "Not Found"
 
-#define SUCCESS_CODE 200
+#define SUCCESS_CODE   200
+#define NOT_FOUND_CODE 404
 
 namespace app{
 
