@@ -9,11 +9,10 @@ int main() {
   router::Router myrouter;
 
   myrouter.add_route("/api", POST, [](data::request_t req) {
-    throw std::runtime_error("Something went wrong!"); // Simulate an error
     return data::Response {
       STATUS_OK,
       SUCCESS_CODE,
-      std::format("This is a response from {} for {}\n", req->path, req->method)
+      req->body.dump()
     };
   });
 

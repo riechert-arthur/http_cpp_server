@@ -33,6 +33,7 @@ std::string data::response_to_string(const data::Response& r) {
   return std::format(
     "HTTP/1.1 {} {}\r\n"
     "Content-Type: application/json\r\n"
+    "Access-Control-Allow-Origin: http://localhost:5173\r\n"
     "Content-Length: {}\r\n"
     "Connection: close\r\n"
     "\r\n"

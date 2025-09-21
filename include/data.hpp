@@ -9,7 +9,7 @@
 
 using json = nlohmann::json;
 
-#define REQUEST_LINE  R"((GET|POST|PATCH|DELETE)\s+(\S+)\s+HTTP/1\.[01])"
+#define REQUEST_LINE  R"((GET|POST|PATCH|DELETE|OPTIONS)\s+(\S+)\s+HTTP/1\.[01])"
 #define SEPARATE_BODY R"(^([\s\S]*?)\r\n\r\n([\s\S]*)$)"
 
 namespace data {

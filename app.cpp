@@ -80,6 +80,18 @@ void app::HttpServer::run() {
       data::request_t req = data::parse_request(buf, bytes_rcvd);
       router::Route route{ req->path, req->method };
 
+      if (req->method == "OPTIONS") {
+        std::string res =
+          "HTTP/1.1 204 No Content\r\n"
+          "Access-Control-Allow-Origin: http://localhost:5173\r\n"
+          "Access-Control-Allow-Methods: GET, POST, OPTIONS\r\n"
+          "Access-Control-Allow-Headers: Content-Type, Authorization\r\n"
+          "Access-Control-Max-Age: 600\r\n"
+          "Connection: close\r\n\r\n";
+        ::send(ps, res.data(), res.size(), 0);
+        continue;
+      }
+
       auto h = this->router.get_handler(route);
       data::Response res;
       if (h) {
