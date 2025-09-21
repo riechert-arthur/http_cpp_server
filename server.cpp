@@ -28,6 +28,6 @@ int main() {
     )"};
   });
 
-  myapp.add_router(myrouter);
+  myapp.add_router(std::move(myrouter));
   myapp.run();
 }
