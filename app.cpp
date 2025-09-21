@@ -81,6 +81,7 @@ void app::HttpServer::run() {
 
       auto h = this->router.get_handler(req->route);
       std::string res;
+      std::cout << req->method << " " << req->route << std::endl;
       if (h) {
         res = (*h)(std::move(req));
       }
