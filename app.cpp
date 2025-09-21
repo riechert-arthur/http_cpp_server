@@ -83,7 +83,14 @@ void app::HttpServer::run() {
       auto h = this->router.get_handler(route);
       data::Response res;
       if (h) {
-        res = (*h)(std::move(req));
+        try { res = (*h)(std::move(req)); }
+        catch (const std::exception& e){
+          res = data::Response {
+            STATUS_INTERNAL_ERROR,
+            INTERNAL_ERROR_CODE,
+            "Internal Server Error"
+          };
+        }
       } else {
         res = data::Response {
           STATUS_NOT_FOUND,

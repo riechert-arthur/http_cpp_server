@@ -13,11 +13,13 @@
 
 #define BUFFER_SIZE  1024
 
-#define STATUS_OK        "OK"
-#define STATUS_NOT_FOUND "Not Found"
+#define STATUS_OK             "OK"
+#define STATUS_NOT_FOUND      "Not Found"
+#define STATUS_INTERNAL_ERROR "Internal Server Error"
 
-#define SUCCESS_CODE   200
-#define NOT_FOUND_CODE 404
+#define SUCCESS_CODE        200
+#define NOT_FOUND_CODE      404
+#define INTERNAL_ERROR_CODE 500
 
 namespace app{
 
