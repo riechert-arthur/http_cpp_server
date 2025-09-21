@@ -99,7 +99,7 @@ void app::HttpServer::run() {
         };
       }
 
-      std::cout << route.method << " " << route.path << std::endl;
+      std::cout << route.method << " " << route.path << " " << res.code << std::endl;
 
       std::string res_str = data::response_to_string(res);
       if (::send(ps, res_str.data(), res_str.size(), 0) == -1) {
