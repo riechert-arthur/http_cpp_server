@@ -1,15 +1,23 @@
 #ifndef DATA_HPP
 #define DATA_HPP
 
+#include "external/json.hpp"
+
 #include <string>
 #include <memory>
 #include <sys/types.h>
+
+using json = nlohmann::json;
+
+#define REQUEST_LINE  R"((GET|POST|PATCH|DELETE)\s+(\S+)\s+HTTP/1\.[01])"
+#define SEPARATE_BODY R"(^([\s\S]*?)\r\n\r\n([\s\S]*)$)"
 
 namespace data {
 
 typedef struct request {
   std::string method;
   std::string path;
+  json body;
 } Request;
 
 using request_t = std::unique_ptr<data::Request>;

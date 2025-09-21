@@ -21,7 +21,7 @@ int main() {
     return data::Response {
       STATUS_OK,
       SUCCESS_CODE,
-      std::format("YAHOOO THERE IS A ROUTER UP IN THIS SHI!")
+      std::format("Echoing:\n\n{}\n", req->body.dump())
     };
   });
 
