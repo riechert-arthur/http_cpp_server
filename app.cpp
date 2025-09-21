@@ -78,13 +78,15 @@ void app::HttpServer::run() {
       }
 
       data::request_t req = data::parse_request(buf, bytes_rcvd);
+      router::Route route{ req->path, req->method };
 
-      auto h = this->router.get_handler(req->route);
+      auto h = this->router.get_handler(route);
       std::string res;
-      std::cout << req->method << " " << req->route << std::endl;
       if (h) {
         res = (*h)(std::move(req));
       }
+
+      std::cout << route.method << " " << route.path << std::endl;
 
       if (::send(ps, res.data(), res.size(), 0) == -1) {
         throw std::runtime_error("Error while ponging peer!");

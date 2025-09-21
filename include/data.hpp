@@ -9,7 +9,7 @@ namespace data {
 
 typedef struct request {
   std::string method;
-  std::string route;
+  std::string path;
 } Request;
 
 using request_t = std::unique_ptr<data::Request>;
