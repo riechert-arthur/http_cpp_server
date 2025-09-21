@@ -81,20 +81,21 @@ void app::HttpServer::run() {
       router::Route route{ req->path, req->method };
 
       auto h = this->router.get_handler(route);
-      std::string res;
+      data::Response res;
       if (h) {
         res = (*h)(std::move(req));
       } else {
-        res = data::response_to_string(
-          data::Response {
-            STATUS_NOT_FOUND, NOT_FOUND_CODE, "404 Not Found"
-          }
-        );
+        res = data::Response {
+          STATUS_NOT_FOUND,
+          NOT_FOUND_CODE,
+          "404 Not Found"
+        };
       }
 
       std::cout << route.method << " " << route.path << std::endl;
 
-      if (::send(ps, res.data(), res.size(), 0) == -1) {
+      std::string res_str = data::response_to_string(res);
+      if (::send(ps, res_str.data(), res_str.size(), 0) == -1) {
         throw std::runtime_error("Error while ponging peer!");
       }
     }

@@ -12,7 +12,7 @@
 
 namespace router {
 
-using handler = std::function<std::string(data::request_t)>;
+using handler = std::function<data::Response(data::request_t)>;
 
 typedef struct route {
   std::string path;

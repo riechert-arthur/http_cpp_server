@@ -9,24 +9,19 @@ int main() {
   router::Router myrouter;
 
   myrouter.add_route("/api", POST, [](data::request_t req) {
-    return data::response_to_string(
-      data::Response {
-        STATUS_OK,
-        SUCCESS_CODE,
-        std::format("This is a response from {} for {}\n", req->path, req->method)
-      }
-    );
+    return data::Response {
+      STATUS_OK,
+      SUCCESS_CODE,
+      std::format("This is a response from {} for {}\n", req->path, req->method)
+    };
   });
 
   myrouter.add_route("/api", GET, [](data::request_t req) {
-    return std::string{
-      R"(HTTP/1.1 200 OK
-      Content-Type: text/plain
-      Content-Length: 12
-      Connection: close
-
-      We got a router!
-    )"};
+    return data::Response {
+      STATUS_OK,
+      SUCCESS_CODE,
+      std::format("YAHOOO THERE IS A ROUTER UP IN THIS SHI!")
+    };
   });
 
   myapp.add_router(std::move(myrouter));
