@@ -29,12 +29,14 @@ data::request_t data::parse_request(const char *buf, ssize_t bytes_rcvd) {
 }
 
 std::string data::response_to_string(const data::Response& r) {
+  const std::string& body = r.msg;
   return std::format(
-    R"(HTTP/1.1 {} {}
-    Content-Type: text/plain
-    Content-Length: 12
-    Connection: close
-
-    {}
-  )", r.code, r.status, r.msg);
+    "HTTP/1.1 {} {}\r\n"
+    "Content-Type: application/json\r\n"
+    "Content-Length: {}\r\n"
+    "Connection: close\r\n"
+    "\r\n"
+    "{}",
+    r.code, r.status, body.size(), body
+  );
 }
